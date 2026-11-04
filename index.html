@@ -1,0 +1,1113 @@
+# mabar0<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a625c">
+<meta name="description" content="مَعْبَر — دليل الوصول الشامل للأماكن في السعودية.">
+<title>مَعْبَر | الوصول حق للجميع</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+:root{
+--green:#0b7169;
+--green2:#084b47;
+--mint:#e7f6ef;
+--bg:#f6faf8;
+--ink:#183b38;
+--muted:#6c817c;
+--line:#deebe5;
+--gold:#ffc66d;
+--white:#fff;
+--shadow:0 16px 42px #164b4010
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:var(--bg);
+font-family:Tajawal,Arial,sans-serif;
+color:var(--ink)
+}
+
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+
+.wrap{
+max-width:1200px;
+margin:auto;
+padding-inline:22px
+}
+
+header{
+height:82px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:11px;
+font-size:27px;
+font-weight:900
+}
+
+.logo{
+display:grid;
+place-items:center;
+width:47px;
+height:47px;
+background:linear-gradient(145deg,#13a18e,#07534e);
+color:#fff;
+border-radius:16px;
+font-size:27px;
+box-shadow:0 8px 18px #0b71692a
+}
+
+.header-tag{
+padding:9px 14px;
+background:#e4f4ed;
+color:var(--green2);
+border:1px solid #cfe7dc;
+border-radius:30px;
+font-size:13px;
+font-weight:800
+}
+
+.hero{
+position:relative;
+overflow:hidden;
+background:linear-gradient(120deg,#073e3b,#08786f 60%,#26a48e);
+border-radius:30px;
+color:white;
+padding:clamp(27px,5vw,58px);
+min-height:335px;
+display:flex;
+align-items:center
+}
+
+.hero-copy{
+position:relative;
+z-index:2;
+max-width:650px
+}
+
+.eyebrow{
+display:inline-flex;
+align-items:center;
+gap:8px;
+background:#ffffff18;
+border:1px solid #ffffff42;
+padding:8px 13px;
+border-radius:30px;
+font-weight:700;
+font-size:13px
+}
+
+.hero h1{
+font-size:clamp(38px,5.4vw,62px);
+line-height:1.12;
+margin:18px 0 14px;
+font-weight:900;
+letter-spacing:-1px
+}
+
+.hero p{
+font-size:clamp(16px,2vw,20px);
+line-height:1.85;
+color:#dff8ef;
+max-width:570px;
+margin:0
+}
+
+.hero-art{
+position:absolute;
+left:1%;
+bottom:-15px;
+width:min(39%,390px);
+opacity:.96
+}
+
+.hero-art svg{width:100%;height:auto}
+
+.hero:after{
+content:"";
+position:absolute;
+width:240px;
+height:240px;
+border:1px solid #ffffff22;
+border-radius:50%;
+left:17%;
+top:-150px;
+box-shadow:0 0 0 35px #ffffff08,0 0 0 75px #ffffff06
+}
+
+.searchbox{
+position:relative;
+z-index:3;
+margin:-27px 22px 0
+}
+
+.searchrow{
+background:white;
+border:1px solid var(--line);
+box-shadow:var(--shadow);
+border-radius:21px;
+padding:15px;
+display:grid;
+grid-template-columns:2fr 1fr 1fr auto;
+gap:10px
+}
+
+.field{
+min-width:0;
+width:100%;
+border:1px solid #d9e8e1;
+background:#fbfdfc;
+border-radius:13px;
+padding:13px 14px;
+color:var(--ink);
+outline:none
+}
+
+.field:focus{
+border-color:var(--green);
+box-shadow:0 0 0 3px #0b716918
+}
+
+.btn{
+border:0;
+border-radius:13px;
+padding:12px 18px;
+font-weight:800;
+background:var(--green);
+color:#fff
+}
+
+.btn:hover{background:var(--green2)}
+
+.section{padding-top:34px;padding-bottom:12px}
+
+.heading{
+display:flex;
+justify-content:space-between;
+align-items:end;
+gap:12px;
+margin-bottom:18px
+}
+
+.heading h2{
+font-size:28px;
+margin:0 0 5px;
+font-weight:900
+}
+
+.heading p{
+margin:0;
+color:var(--muted);
+line-height:1.7
+}
+
+.count{
+background:var(--mint);
+color:var(--green2);
+font-weight:900;
+padding:8px 13px;
+border-radius:30px;
+white-space:nowrap
+}
+
+.chips{
+display:flex;
+gap:9px;
+overflow:auto;
+padding:2px 0 14px
+}
+
+.chip{
+border:1px solid var(--line);
+border-radius:30px;
+background:#fff;
+padding:10px 15px;
+white-space:nowrap;
+color:var(--ink);
+font-weight:800
+}
+
+.chip.active,.chip:hover{
+background:var(--green);
+border-color:var(--green);
+color:#fff
+}
+
+.notice{
+background:#fff8e8;
+border:1px solid #f2dfb2;
+border-radius:14px;
+padding:13px 15px;
+line-height:1.8;
+color:#78551a;
+font-size:14px;
+margin-bottom:18px
+}
+
+.layout{
+display:grid;
+grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+gap:17px;
+align-items:start
+}
+
+.cards{
+display:grid;
+gap:12px;
+max-height:760px;
+overflow:auto;
+padding:2px
+}
+
+.card{
+background:#fff;
+border:1px solid var(--line);
+border-radius:19px;
+padding:17px;
+box-shadow:0 5px 16px #174b4008;
+transition:transform .2s,box-shadow .2s
+}
+
+.card:hover{
+transform:translateY(-2px);
+box-shadow:var(--shadow)
+}
+
+.cardtop{
+display:flex;
+align-items:start;
+justify-content:space-between;
+gap:10px
+}
+
+.placetitle{
+display:flex;
+align-items:center;
+gap:12px;
+min-width:0
+}
+
+.placeicon{
+width:48px;
+height:48px;
+flex-shrink:0;
+display:grid;
+place-items:center;
+background:var(--mint);
+border-radius:15px;
+font-size:24px
+}
+
+.placetitle h3{
+margin:0 0 4px;
+font-size:18px;
+font-weight:900
+}
+
+.sub{
+color:var(--muted);
+font-size:13px;
+line-height:1.6
+}
+
+.badge{
+background:#fff0d2;
+color:#815900;
+border-radius:20px;
+padding:6px 9px;
+font-size:11px;
+font-weight:900;
+white-space:normal
+}
+
+.badge.available{
+background:#d8f5e5;
+color:#086344
+}
+
+.badge.unavailable{
+background:#fde2e2;
+color:#a12b2b
+}
+
+.features{
+display:flex;
+gap:7px;
+flex-wrap:wrap;
+margin:14px 0
+}
+
+.feature{
+font-size:12px;
+background:#f5f8f6;
+border:1px solid #e3ece7;
+border-radius:9px;
+padding:7px 8px;
+color:#526d66
+}
+
+.feature b{color:var(--ink)}
+
+.actions{
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
+
+.action{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+border:1px solid var(--line);
+border-radius:10px;
+padding:9px 11px;
+font-size:13px;
+font-weight:900;
+background:white;
+color:var(--green2)
+}
+
+.action.main{
+background:var(--green);
+color:white;
+border-color:var(--green)
+}
+
+#map{
+height:760px;
+min-height:430px;
+border:1px solid var(--line);
+border-radius:21px;
+box-shadow:var(--shadow);
+z-index:1
+}
+
+.map-caption{
+font-size:12px;
+line-height:1.8;
+color:var(--muted);
+margin:8px 3px
+}
+
+.empty{
+background:white;
+border:1px dashed #b9d6ca;
+border-radius:15px;
+padding:30px;
+text-align:center;
+color:var(--muted);
+line-height:1.8
+}
+
+.steps{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:13px
+}
+
+.step{
+background:white;
+border:1px solid var(--line);
+border-radius:18px;
+padding:20px
+}
+
+.step .emoji{font-size:29px}
+.step h3{margin:8px 0;font-size:18px}
+
+.step p{
+color:var(--muted);
+line-height:1.8;
+margin:0;
+font-size:14px
+}
+
+footer{
+background:#073e3b;
+color:#d9f1e9;
+margin-top:34px;
+padding:27px 0
+}
+
+.foot{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+flex-wrap:wrap
+}
+
+.foot strong{font-size:21px}
+
+.foot small{
+color:#c0e1d8;
+line-height:1.9
+}
+
+.modalbg{
+position:fixed;
+inset:0;
+background:#062e2bdd;
+z-index:1000;
+display:none;
+align-items:center;
+justify-content:center;
+padding:16px
+}
+
+.modalbg.open{display:flex}
+
+.modal{
+width:min(560px,100%);
+max-height:90vh;
+overflow:auto;
+background:white;
+border-radius:22px;
+padding:23px
+}
+
+.modal h3{font-size:23px;margin:0 0 6px}
+
+.modal p{
+color:var(--muted);
+line-height:1.7
+}
+
+.formgrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
+}
+
+.formgroup label{
+display:block;
+font-size:13px;
+font-weight:800;
+margin-bottom:6px
+}
+
+.formgroup.full{grid-column:1/-1}
+
+.modalbuttons{
+display:flex;
+gap:9px;
+margin-top:14px
+}
+
+.cancel{
+background:#edf5f1;
+border:0;
+border-radius:10px;
+padding:11px 15px;
+font-weight:800
+}
+
+@media(max-width:850px){
+.searchrow{grid-template-columns:1fr 1fr}
+.searchrow input{grid-column:1/-1}
+.layout{grid-template-columns:1fr}
+.cards{max-height:none;overflow:visible;order:2}
+#map{height:390px;min-height:350px;order:1}
+.steps{grid-template-columns:1fr}
+.hero-art{width:32%;opacity:.45}
+}
+
+@media(max-width:520px){
+.wrap{padding-inline:14px}
+header{height:70px}
+.brand{font-size:24px}
+.header-tag{font-size:11px;padding:8px 10px}
+.hero{padding:27px 21px;min-height:310px;border-radius:23px}
+.hero h1{font-size:40px}
+.hero-art{width:49%;left:-9%;opacity:.28}
+.searchbox{margin:-23px 14px 0}
+.searchrow{grid-template-columns:1fr;padding:11px}
+.searchrow input{grid-column:auto}
+.section{padding-top:28px}
+.heading{align-items:start}
+.heading h2{font-size:24px}
+.heading p{font-size:13px}
+.count{font-size:12px}
+.cardtop{gap:7px}
+.placetitle h3{font-size:16px}
+.formgrid{grid-template-columns:1fr}
+.formgroup.full{grid-column:auto}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header>
+ <div class="brand">
+  <span class="logo">♿</span>
+  <span>مَعْبَر</span>
+ </div>
+ <span class="header-tag">🇸🇦 دليل الوصول الشامل في السعودية</span>
+</header>
+
+<section class="hero">
+ <div class="hero-copy">
+  <span class="eyebrow">🌿 الوصول حق للجميع</span>
+  <h1>طريق أسهل،<br>وصول أيسر.</h1>
+  <p>اكتشف الأماكن في السعودية، وابحث عن المستشفيات والجامعات والمطاعم والمرافق العامة، وتعرّف على معلومات الوصول قبل الزيارة.</p>
+ </div>
+
+ <div class="hero-art" aria-hidden="true">
+ <svg viewBox="0 0 360 285" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="190" cy="145" r="112" fill="#fff" opacity=".09"/>
+  <path d="M20 236Q90 188 152 219T340 197V285H20Z" fill="#d6fff0" opacity=".2"/>
+  <rect x="80" y="55" width="126" height="177" rx="11" fill="#f6fff9"/>
+  <rect x="95" y="72" width="28" height="30" rx="4" fill="#85cfc0"/>
+  <rect x="132" y="72" width="28" height="30" rx="4" fill="#85cfc0"/>
+  <rect x="169" y="72" width="22" height="30" rx="4" fill="#85cfc0"/>
+  <rect x="95" y="115" width="28" height="30" rx="4" fill="#85cfc0"/>
+  <rect x="132" y="115" width="28" height="30" rx="4" fill="#85cfc0"/>
+  <rect x="169" y="115" width="22" height="30" rx="4" fill="#85cfc0"/>
+  <rect x="127" y="167" width="35" height="65" rx="4" fill="#0a7169"/>
+  <path d="M55 232H235" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="250" cy="81" r="19" fill="#ffc66d"/>
+  <path d="M246 105L233 147L261 163M234 145L210 170M246 120L278 126" stroke="#ffc66d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="242" cy="205" r="31" fill="none" stroke="#ffc66d" stroke-width="9"/>
+  <path d="M233 150L242 205L282 205" stroke="#ffc66d" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="242" cy="205" r="5" fill="#fff"/>
+  <path d="M18 92Q43 60 68 92M28 106Q43 86 58 106" stroke="#c5f6e8" stroke-width="5" fill="none" stroke-linecap="round"/>
+ </svg>
+ </div>
+</section>
+
+<div class="searchbox">
+ <div class="searchrow">
+  <input class="field" id="q" type="search" placeholder="🔎 ابحث باسم المكان أو المدينة..." aria-label="ابحث باسم المكان أو المدينة">
+  <select class="field" id="city" aria-label="اختر المدينة">
+   <option value="">كل مدن السعودية</option>
+  </select>
+  <select class="field" id="category" aria-label="اختر التصنيف">
+   <option value="">كل التصنيفات</option>
+  </select>
+  <button class="btn" id="search">ابحث الآن</button>
+ </div>
+</div>
+
+<main>
+<section class="section">
+ <div class="heading">
+  <div>
+   <h2>اكتشف الأماكن</h2>
+   <p>أماكن من مناطق المملكة — اختر التصنيف أو ابحث بالمدينة.</p>
+  </div>
+  <span class="count" id="count">تحميل...</span>
+ </div>
+
+ <div class="chips" id="chips"></div>
+
+ <div class="notice">
+  ♿ <b>معلومات المرافق:</b>
+  تظهر خدمات الوصول في الجامعات والمستشفيات والمولات والمطارات بحالة «متوفر»، بينما تظهر في الكليات بحالة «غير متوفر».
+ </div>
+
+ <div class="layout">
+  <div class="cards" id="cards" aria-live="polite"></div>
+  <div>
+   <div id="map" aria-label="خريطة الأماكن"></div>
+   <p class="map-caption">الخريطة إرشادية. اضغط «افتح في خرائط Google» للتحقق من الفرع والعنوان والاتجاهات قبل الانطلاق.</p>
+  </div>
+ </div>
+</section>
+
+<section class="section">
+ <div class="heading">
+  <div>
+   <h2>معبر للجميع</h2>
+   <p>نريد أن تكون المعلومة دقيقة وسهلة الوصول.</p>
+  </div>
+ </div>
+
+ <div class="steps">
+  <article class="step">
+   <span class="emoji">🔎</span>
+   <h3>ابحث بثقة</h3>
+   <p>فلتر الأماكن حسب المدينة والتصنيف للوصول إلى خيارات تناسب احتياجك.</p>
+  </article>
+
+  <article class="step">
+   <span class="emoji">🧭</span>
+   <h3>تحقق قبل الزيارة</h3>
+   <p>افتح الموقع على الخرائط، وتأكد من المرافق عبر مصدر موثوق أو اتصال بالفرع.</p>
+  </article>
+
+  <article class="step">
+   <span class="emoji">🤝</span>
+   <h3>ساعد المجتمع</h3>
+   <p>شارك تحديثًا عما شاهدته بنفسك. هذه النسخة تحفظ التحديث محليًا على جهازك فقط.</p>
+  </article>
+ </div>
+</section>
+</main>
+</div>
+
+<footer>
+ <div class="wrap foot">
+  <div>
+   <strong>مَعْبَر ♿</strong><br>
+   <small>طريق أسهل، وصول أيسر.</small>
+  </div>
+  <small>
+   دليل تجريبي للوصول الشامل في السعودية.<br>
+   ©️ 2026 مَعْبَر
+  </small>
+ </div>
+</footer>
+
+<div class="modalbg" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal">
+  <h3 id="modalTitle">أرسل تحديثًا عن المكان</h3>
+  <p id="modalPlace"></p>
+
+  <div class="formgrid">
+   <div class="formgroup">
+    <label for="entrance">مدخل مناسب للكراسي</label>
+    <select class="field" id="entrance">
+     <option value="unknown">غير متأكد</option>
+     <option value="yes">متوفر</option>
+     <option value="no">غير متوفر</option>
+    </select>
+   </div>
+
+   <div class="formgroup">
+    <label for="elevator">مصعد مناسب</label>
+    <select class="field" id="elevator">
+     <option value="unknown">غير متأكد</option>
+     <option value="yes">متوفر</option>
+     <option value="no">غير متوفر</option>
+    </select>
+   </div>
+
+   <div class="formgroup">
+    <label for="parking">مواقف مخصصة</label>
+    <select class="field" id="parking">
+     <option value="unknown">غير متأكد</option>
+     <option value="yes">متوفرة</option>
+     <option value="no">غير متوفرة</option>
+    </select>
+   </div>
+
+   <div class="formgroup">
+    <label for="restroom">دورة مياه مهيأة</label>
+    <select class="field" id="restroom">
+     <option value="unknown">غير متأكد</option>
+     <option value="yes">متوفرة</option>
+     <option value="no">غير متوفرة</option>
+    </select>
+   </div>
+
+   <div class="formgroup full">
+    <label for="notes">ملاحظة (اختياري)</label>
+    <input class="field" id="notes" placeholder="اكتب ما تحققت منه بنفسك">
+   </div>
+  </div>
+
+  <p style="font-size:12px">
+   التحديث تجريبي ومحفوظ في متصفحك فقط، ولن يظهر للزوار الآخرين حتى نربط قاعدة بيانات مشتركة.
+  </p>
+
+  <div class="modalbuttons">
+   <button class="btn" id="save">حفظ التحديث</button>
+   <button class="cancel" id="cancel">إلغاء</button>
+  </div>
+ </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+const places=[
+{id:1,n:"جامعة الملك عبدالعزيز",c:"جدة",k:"جامعات",lat:21.4883,lng:39.2452},
+{id:2,n:"جامعة جدة",c:"جدة",k:"جامعات",lat:21.9056,lng:39.0945},
+{id:3,n:"كلية الاتصالات والإلكترونيات",c:"جدة",k:"كليات",lat:21.4880,lng:39.2431},
+{id:4,n:"مستشفى الملك فهد العام",c:"جدة",k:"مستشفيات",lat:21.5165,lng:39.1728},
+{id:5,n:"مستشفى الملك فيصل التخصصي ومركز الأبحاث",c:"جدة",k:"مستشفيات",lat:21.5169,lng:39.1675},
+{id:6,n:"مستشفى شرق جدة",c:"جدة",k:"مستشفيات",lat:21.5430,lng:39.2500},
+{id:7,n:"مستشفى الملك عبدالعزيز",c:"جدة",k:"مستشفيات",lat:21.4850,lng:39.1870},
+{id:8,n:"مستشفى حراء العام",c:"مكة المكرمة",k:"مستشفيات",lat:21.4735,lng:39.8642},
+{id:9,n:"مدينة الملك عبدالله الطبية",c:"مكة المكرمة",k:"مستشفيات",lat:21.3891,lng:39.8579},
+{id:10,n:"مستشفى النور التخصصي",c:"مكة المكرمة",k:"مستشفيات",lat:21.3897,lng:39.8290},
+{id:11,n:"جامعة أم القرى",c:"مكة المكرمة",k:"جامعات",lat:21.3891,lng:39.8579},
+{id:12,n:"إمارة منطقة مكة المكرمة",c:"مكة المكرمة",k:"دوائر حكومية",lat:21.4225,lng:39.8262},
+{id:13,n:"جامعة الملك سعود",c:"الرياض",k:"جامعات",lat:24.7210,lng:46.6280},
+{id:14,n:"جامعة الأميرة نورة بنت عبدالرحمن",c:"الرياض",k:"جامعات",lat:24.8467,lng:46.7240},
+{id:15,n:"جامعة الإمام محمد بن سعود الإسلامية",c:"الرياض",k:"جامعات",lat:24.8145,lng:46.7044},
+{id:16,n:"جامعة الأمير سلطان",c:"الرياض",k:"جامعات",lat:24.7420,lng:46.6980},
+{id:17,n:"مستشفى الملك خالد الجامعي",c:"الرياض",k:"مستشفيات",lat:24.7130,lng:46.6250},
+{id:18,n:"مدينة الملك سعود الطبية",c:"الرياض",k:"مستشفيات",lat:24.6408,lng:46.7114},
+{id:19,n:"مستشفى الملك فيصل التخصصي",c:"الرياض",k:"مستشفيات",lat:24.6877,lng:46.6688},
+{id:20,n:"وزارة الداخلية",c:"الرياض",k:"دوائر حكومية",lat:24.6640,lng:46.7100},
+{id:21,n:"وزارة التجارة",c:"الرياض",k:"دوائر حكومية",lat:24.6900,lng:46.6850},
+{id:22,n:"وزارة الموارد البشرية والتنمية الاجتماعية",c:"الرياض",k:"دوائر حكومية",lat:24.6905,lng:46.6855},
+{id:23,n:"إمارة منطقة الرياض",c:"الرياض",k:"دوائر حكومية",lat:24.6310,lng:46.7130},
+{id:24,n:"أمانة منطقة الرياض",c:"الرياض",k:"دوائر حكومية",lat:24.6315,lng:46.7150},
+{id:25,n:"جامعة طيبة",c:"المدينة المنورة",k:"جامعات",lat:24.4709,lng:39.6122},
+{id:26,n:"الجامعة الإسلامية",c:"المدينة المنورة",k:"جامعات",lat:24.4686,lng:39.5464},
+{id:27,n:"مستشفى الملك فهد",c:"المدينة المنورة",k:"مستشفيات",lat:24.4700,lng:39.6100},
+{id:28,n:"النور مول",c:"المدينة المنورة",k:"مولات وأسواق",lat:24.4780,lng:39.6120},
+{id:29,n:"جامعة الإمام عبدالرحمن بن فيصل",c:"الدمام",k:"جامعات",lat:26.3927,lng:50.2010},
+{id:30,n:"مستشفى الملك فهد التخصصي",c:"الدمام",k:"مستشفيات",lat:26.3927,lng:50.1050},
+{id:31,n:"جامعة الملك فهد للبترول والمعادن",c:"الظهران",k:"جامعات",lat:26.4115,lng:50.1420},
+{id:32,n:"الظهران مول",c:"الظهران",k:"مولات وأسواق",lat:26.3090,lng:50.1710},
+{id:33,n:"جامعة الملك خالد",c:"أبها",k:"جامعات",lat:18.2465,lng:42.5595},
+{id:34,n:"مستشفى أبها الخاص",c:"أبها",k:"مستشفيات",lat:18.2164,lng:42.5053},
+{id:35,n:"جامعة القصيم",c:"بريدة",k:"جامعات",lat:26.3500,lng:43.7667},
+{id:36,n:"جامعة حائل",c:"حائل",k:"جامعات",lat:27.5236,lng:41.6966},
+{id:37,n:"جامعة تبوك",c:"تبوك",k:"جامعات",lat:28.3838,lng:36.5662},
+{id:38,n:"جامعة جازان",c:"جازان",k:"جامعات",lat:16.8892,lng:42.5511},
+{id:39,n:"جامعة نجران",c:"نجران",k:"جامعات",lat:17.5650,lng:44.2289},
+{id:40,n:"جامعة الطائف",c:"الطائف",k:"جامعات",lat:21.4390,lng:40.5120},
+{id:41,n:"جامعة طيبة - فرع المدينة",c:"المدينة المنورة",k:"جامعات",lat:24.4709,lng:39.6122},
+{id:42,n:"رد سي مول",c:"جدة",k:"مولات وأسواق",lat:21.6270,lng:39.1090},
+{id:43,n:"مول العرب",c:"جدة",k:"مولات وأسواق",lat:21.6230,lng:39.1540},
+{id:44,n:"الأندلس مول",c:"جدة",k:"مولات وأسواق",lat:21.5040,lng:39.2300},
+{id:45,n:"السلام مول",c:"جدة",k:"مولات وأسواق",lat:21.5433,lng:39.2200},
+{id:46,n:"الرياض بارك",c:"الرياض",k:"مولات وأسواق",lat:24.7640,lng:46.6270},
+{id:47,n:"النخيل مول",c:"الرياض",k:"مولات وأسواق",lat:24.7460,lng:46.6740},
+{id:48,n:"بانوراما مول",c:"الرياض",k:"مولات وأسواق",lat:24.6870,lng:46.6850},
+{id:49,n:"العثيم مول",c:"الدمام",k:"مولات وأسواق",lat:26.4200,lng:50.0900},
+{id:50,n:"مكة مول",c:"مكة المكرمة",k:"مولات وأسواق",lat:21.3890,lng:39.8570},
+{id:51,n:"جوري مول",c:"الطائف",k:"مولات وأسواق",lat:21.2780,lng:40.4210},
+{id:52,n:"مطاعم البيك — ابحث عن أقرب فرع",c:"جدة",k:"مطاعم",lat:21.5433,lng:39.1728},
+{id:53,n:"مطاعم الطازج — ابحث عن أقرب فرع",c:"جدة",k:"مطاعم",lat:21.5433,lng:39.1728},
+{id:54,n:"شاورمر — ابحث عن أقرب فرع",c:"الرياض",k:"مطاعم",lat:24.7136,lng:46.6753},
+{id:55,n:"هرفي — ابحث عن أقرب فرع",c:"جدة",k:"مطاعم",lat:21.5433,lng:39.1728},
+{id:56,n:"ماكدونالدز — ابحث عن أقرب فرع",c:"الرياض",k:"مطاعم",lat:24.7136,lng:46.6753},
+{id:57,n:"برجر كينج — ابحث عن أقرب فرع",c:"الدمام",k:"مطاعم",lat:26.4200,lng:50.0900},
+{id:58,n:"كودو — ابحث عن أقرب فرع",c:"المدينة المنورة",k:"مطاعم",lat:24.4709,lng:39.6122},
+{id:59,n:"ستاربكس — ابحث عن أقرب فرع",c:"جدة",k:"كافيهات",lat:21.5433,lng:39.1728},
+{id:60,n:"دانكن — ابحث عن أقرب فرع",c:"جدة",k:"كافيهات",lat:21.5433,lng:39.1728},
+{id:61,n:"بارنز — ابحث عن أقرب فرع",c:"مكة المكرمة",k:"كافيهات",lat:21.4225,lng:39.8262},
+{id:62,n:"نصف مليون — ابحث عن أقرب فرع",c:"الرياض",k:"كافيهات",lat:24.7136,lng:46.6753},
+{id:63,n:"مكتبة جرير — ابحث عن أقرب فرع",c:"جدة",k:"مولات وأسواق",lat:21.5433,lng:39.1728},
+{id:64,n:"مطار الملك عبدالعزيز الدولي",c:"جدة",k:"نقل ومطارات",lat:21.6702,lng:39.1525},
+{id:65,n:"مطار الملك خالد الدولي",c:"الرياض",k:"نقل ومطارات",lat:24.9576,lng:46.6988},
+{id:66,n:"مطار الملك فهد الدولي",c:"الدمام",k:"نقل ومطارات",lat:26.4712,lng:49.7979},
+{id:67,n:"محطة قطار الحرمين — مكة",c:"مكة المكرمة",k:"نقل ومطارات",lat:21.3890,lng:39.8570},
+{id:68,n:"محطة قطار الحرمين — المدينة",c:"المدينة المنورة",k:"نقل ومطارات",lat:24.4670,lng:39.7050},
+{id:69,n:"مركز الملك عبدالعزيز الثقافي إثراء",c:"الظهران",k:"ثقافة وترفيه",lat:26.3360,lng:50.1140},
+{id:70,n:"واجهة جدة البحرية",c:"جدة",k:"ثقافة وترفيه",lat:21.6140,lng:39.1030},
+{id:71,n:"بوليفارد رياض سيتي",c:"الرياض",k:"ثقافة وترفيه",lat:24.7670,lng:46.6030},
+{id:72,n:"حديقة الأمير ماجد",c:"جدة",k:"حدائق ومتنزهات",lat:21.5680,lng:39.1960},
+{id:73,n:"حديقة الملك عبدالله",c:"الرياض",k:"حدائق ومتنزهات",lat:24.6640,lng:46.7350},
+{id:74,n:"مركز الملك عبدالله المالي",c:"الرياض",k:"مراكز وأعمال",lat:24.7670,lng:46.6430}
+];
+
+const icons={
+"جامعات":"🎓",
+"كليات":"🏫",
+"مستشفيات":"🏥",
+"مولات وأسواق":"🛍️",
+"مطاعم":"🍽️",
+"كافيهات":"☕",
+"دوائر حكومية":"🏛️",
+"نقل ومطارات":"✈️",
+"ثقافة وترفيه":"🎡",
+"حدائق ومتنزهات":"🌳",
+"مراكز وأعمال":"🏢"
+};
+
+const feat=[
+{key:"entrance",name:"مدخل مناسب للكراسي",icon:"♿"},
+{key:"elevator",name:"مصعد مناسب",icon:"🛗"},
+{key:"parking",name:"مواقف مخصصة",icon:"🅿️"},
+{key:"restroom",name:"دورة مياه مهيأة",icon:"🚻"}
+];
+
+const facilityCategories=[
+"مولات وأسواق",
+"جامعات",
+"مستشفيات"
+];
+
+function isTechnicalCollege(p){
+return p.k==="كليات" ||
+/كلية.*تقنية|تقنية.*كلية/.test(p.n);
+}
+
+function isAvailablePlace(p){
+return facilityCategories.includes(p.k) ||
+(p.k==="نقل ومطارات" && p.n.includes("مطار"));
+}
+
+function reports(){
+try{
+return JSON.parse(localStorage.getItem("maabr_reports")||"{}");
+}catch(e){
+return {};
+}
+}
+
+function value(p,k){
+if(isTechnicalCollege(p)) return "no";
+if(isAvailablePlace(p)) return "yes";
+
+const savedReports=reports();
+const placeReport=savedReports[p.id]||{};
+
+if(placeReport[k] && placeReport[k]!=="unknown"){
+return placeReport[k];
+}
+
+return placeReport[k]||"unknown";
+}
+
+function valueText(v){
+if(v==="yes") return "متوفر";
+if(v==="no") return "غير متوفر";
+return "غير مؤكد";
+}
+
+function mapsUrl(p){
+return "https://www.google.com/maps/search/?api=1&query="+
+encodeURIComponent(p.n+" "+p.c+" السعودية");
+}
+
+function render(data){
+const cards=document.getElementById("cards");
+document.getElementById("count").textContent=
+data.length+" مكان";
+
+if(!data.length){
+cards.innerHTML='<div class="empty">لم يتم العثور على أماكن مطابقة للبحث.</div>';
+return;
+}
+
+cards.innerHTML=data.map(p=>{
+const available=isAvailablePlace(p);
+const unavailable=isTechnicalCollege(p);
+
+const badge=unavailable
+?"غير متوفر"
+:available
+?"متوفر"
+:"المرافق غير مؤكدة";
+
+const badgeClass=unavailable
+?"unavailable"
+:available
+?"available"
+:"";
+
+return `
+<article class="place-card">
+ <div class="card-top">
+  <div class="place-icon">${icons[p.k]||"📍"}</div>
+  <span class="badge ${badgeClass}">${badge}</span>
+ </div>
+
+ <h3>${p.n}</h3>
+ <div class="place-meta">
+  <span>📍 ${p.c}</span>
+  <span>${p.k}</span>
+ </div>
+
+ <div class="features">
+  ${feat.map(f=>`
+   <div class="feature">
+    <span>${f.icon} ${f.name}</span>
+    <b class="${value(p,f.key)}">${valueText(value(p,f.key))}</b>
+   </div>
+  `).join("")}
+ </div>
+
+ <div class="card-actions">
+  <a class="map-link" href="${mapsUrl(p)}" target="_blank" rel="noopener">افتح في خرائط Google ↗</a>
+  <button class="report-btn" onclick="openReport(${p.id})">تحديث المعلومات</button>
+ </div>
+</article>
+`;
+}).join("");
+}
+
+function populateFilters(){
+const cities=[...new Set(places.map(p=>p.c))].sort();
+const categories=[...new Set(places.map(p=>p.k))].sort();
+
+document.getElementById("city").innerHTML=
+'<option value="">كل مدن السعودية</option>'+
+cities.map(c=>`<option value="${c}">${c}</option>`).join("");
+
+document.getElementById("category").innerHTML=
+'<option value="">كل التصنيفات</option>'+
+categories.map(k=>`<option value="${k}">${k}</option>`).join("");
+
+const chips=document.getElementById("chips");
+chips.innerHTML=
+'<button class="chip active" data-category="">الكل</button>'+
+categories.map(k=>`<button class="chip" data-category="${k}">${icons[k]||"📍"} ${k}</button>`).join("");
+
+chips.querySelectorAll(".chip").forEach(btn=>{
+btn.addEventListener("click",()=>{
+document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+btn.classList.add("active");
+document.getElementById("category").value=btn.dataset.category;
+filter();
+});
+});
+}
+
+function filter(){
+const q=document.getElementById("q").value.trim().toLowerCase();
+const city=document.getElementById("city").value;
+const category=document.getElementById("category").value;
+
+const data=places.filter(p=>{
+const matchesText=!q ||
+p.n.toLowerCase().includes(q) ||
+p.c.toLowerCase().includes(q) ||
+p.k.toLowerCase().includes(q);
+
+const matchesCity=!city||p.c===city;
+const matchesCategory=!category||p.k===category;
+
+return matchesText&&matchesCity&&matchesCategory;
+});
+
+render(data);
+updateMap(data);
+}
+
+let selectedPlace=null;
+
+function openReport(id){
+selectedPlace=places.find(p=>p.id===id);
+if(!selectedPlace) return;
+
+document.getElementById("modalPlace").textContent=
+selectedPlace.n+" — "+selectedPlace.c;
+
+const current=reports()[id]||{};
+
+feat.forEach(f=>{
+document.getElementById(f.key).value=
+current[f.key]||"unknown";
+});
+
+document.getElementById("notes").value=current.notes||"";
+document.getElementById("modal").classList.add("show");
+}
+
+function closeReport(){
+document.getElementById("modal").classList.remove("show");
+selectedPlace=null;
+}
+
+function saveReport(){
+if(!selectedPlace) return;
+
+const allReports=reports();
+const current={};
+
+feat.forEach(f=>{
+current[f.key]=document.getElementById(f.key).value;
+});
+
+current.notes=document.getElementById("notes").value.trim();
+current.updatedAt=new Date().toISOString();
+
+allReports[selectedPlace.id]=current;
+
+try{
+localStorage.setItem("maabr_reports",JSON.stringify(allReports));
+}catch(e){
+alert("تعذر حفظ التحديث في المتصفح.");
+return;
+}
+
+closeReport();
+filter();
+alert("تم حفظ التحديث على هذا الجهاز.");
+}
+
+let map=null;
+let markers=[];
+
+function setupMap(){
+if(typeof L==="undefined") return;
+
+map=L.map("map").setView([23.8859,45.0792],5);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+updateMap(places);
+}
+
+function updateMap(data){
+if(!map) return;
+
+markers.forEach(marker=>map.removeLayer(marker));
+markers=[];
+
+data.forEach(p=>{
+if(!Number.isFinite(p.lat)||!Number.isFinite(p.lng)) return;
+
+const marker=L.marker([p.lat,p.lng]).addTo(map);
+
+marker.bindPopup(`
+<strong>${p.n}</strong><br>
+${p.c}<br>
+${p.k}
+`);
+
+markers.push(marker);
+});
+
+if(data.length===1){
+map.setView([data[0].lat,data[0].lng],13);
+}else if(data.length>1){
+const bounds=L.latLngBounds(data.map(p=>[p.lat,p.lng]));
+map.fitBounds(bounds,{padding:[25,25],maxZoom:12});
+}
+}
+
+document.getElementById("search").addEventListener("click",filter);
+document.getElementById("q").addEventListener("input",filter);
+document.getElementById("city").addEventListener("change",()=>{
+document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+filter();
+});
+document.getElementById("category").addEventListener("change",()=>{
+document.querySelectorAll(".chip").forEach(c=>{
+c.classList.toggle("active",c.dataset.category===document.getElementById("category").value);
+});
+filter();
+});
+
+document.getElementById("save").addEventListener("click",saveReport);
+document.getElementById("cancel").addEventListener("click",closeReport);
+
+document.getElementById("modal").addEventListener("click",e=>{
+if(e.target.id==="modal") closeReport();
+});
+
+populateFilters();
+render(places);
+setupMap();
+</script>
+</body>
+</html>
